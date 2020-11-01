@@ -2,11 +2,11 @@ package com.bookcatalogue.main.java.model;
 
 import com.bookcatalogue.main.java.exception.BookAlreadyExistException;
 import com.bookcatalogue.main.java.exception.InvalidBookException;
-import com.bookcatalogue.main.java.model.interfaces.AddBookToCatalogue;
+import com.bookcatalogue.main.java.service.catalogue.interfaces.AddBookToCatalogue;
 
 import java.util.List;
 
-public class Catalogue extends DBObject {
+public class Catalogue extends DBObject implements AddBookToCatalogue {
     String name;
     List<Book> books;
 
@@ -22,6 +22,7 @@ public class Catalogue extends DBObject {
         return books;
     }
 
+    @Override
     public void addBook(Book book) throws InvalidBookException, BookAlreadyExistException {
         if(!book.isValid()){
             throw new InvalidBookException("Invalid Book "+book.toString());
