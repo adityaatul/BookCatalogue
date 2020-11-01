@@ -46,4 +46,9 @@ public class Book extends DBObject{
     public void setCopiesSold(int copiesSold) {
         this.copiesSold = copiesSold;
     }
+
+    public boolean isValid() {
+        //this.getName()
+        return true;
+    }
 }

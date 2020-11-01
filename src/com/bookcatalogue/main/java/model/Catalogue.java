@@ -1,8 +1,12 @@
 package com.bookcatalogue.main.java.model;
 
+import com.bookcatalogue.main.java.exception.BookAlreadyExistException;
+import com.bookcatalogue.main.java.exception.InvalidBookException;
+import com.bookcatalogue.main.java.model.interfaces.AddBookToCatalogue;
+
 import java.util.List;
 
-public class Catalogue extends DBObject{
+public class Catalogue extends DBObject {
     String name;
     List<Book> books;
 
@@ -18,8 +22,22 @@ public class Catalogue extends DBObject{
         return books;
     }
 
-    public void addBookToCatalogue(Book book){
+    public void addBook(Book book) throws InvalidBookException, BookAlreadyExistException {
+        if(!book.isValid()){
+            throw new InvalidBookException("Invalid Book "+book.toString());
+        }
+        if(this.bookExist(book)){
+            throw new BookAlreadyExistException("Book already present in catalogue "+this.getName());
+        }
         this.books.add(book);
     }
 
+    private boolean bookExist(Book book) {
+        for (Book existingBook: this.books) {
+            if(existingBook.getName().equals(book.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
